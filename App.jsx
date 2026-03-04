@@ -453,8 +453,8 @@ const LandingPage = ({ onQuizStart, onGoManifesto }) => (
             <div style={{ background: COLORS.bg, padding: '24px', marginBottom: '32px' }}>
                 <div className="personas-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '12px', marginBottom: '20px' }}>
                     {['thinker', 'maker', 'storyteller'].map(type => (
-                        <div key={type} className="persona-box" style={{ background: COLORS.white, padding: '16px 16px 0', display: 'flex', alignItems: 'flex-end', justifyContent: 'center', minHeight: '120px' }}>
-                            <img src={`/illustrations/${type}.svg`} alt={type} className="persona-img" style={{ width: '100%', height: 'auto' }} />
+                        <div key={type} className="persona-box" style={{ background: COLORS.white, padding: '24px 24px 0', display: 'flex', alignItems: 'flex-end', justifyContent: 'center', minHeight: '120px' }}>
+                            <img src={`/illustrations/${type}.svg`} alt={type} className="persona-img" style={{ width: '80%', height: 'auto' }} />
                         </div>
                     ))}
                 </div>
@@ -659,8 +659,8 @@ const ResultPage = ({ personaKey, onRestart, onGoManifesto, onBack }) => {
                         />
                     </div>
 
-                    <div style={{ padding: '32px 40px' }}>
-                        <p style={bodyTextStyle}>
+                    <div style={{ padding: '32px 16px' }}>
+                        <p style={{ ...bodyTextStyle, margin: '0 0 32px' }}>
                             {persona.description}
                         </p>
 
@@ -817,7 +817,7 @@ export default function App() {
         .personas-grid { grid-template-columns: 1fr 1fr !important; }
         .personas-grid .persona-box:nth-child(3) { grid-column: span 2; }
         .persona-box { min-height: 100px !important; height: 100px !important; padding: 0 !important; }
-        .persona-img { height: 100px !important; width: auto !important; }
+        .persona-img { height: 75px !important; width: auto !important; }
 
         /* Question & Result Pages Header */
         .page-header { padding: 30px 20px 10px !important; }
