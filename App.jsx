@@ -659,7 +659,7 @@ const ResultPage = ({ personaKey, onRestart, onGoManifesto, onBack }) => {
                         />
                     </div>
 
-                    <div style={{ padding: '32px 16px' }}>
+                    <div className="result-content" style={{ padding: '32px 40px' }}>
                         <p style={{ ...bodyTextStyle, margin: '0 0 32px' }}>
                             {persona.description}
                         </p>
@@ -827,6 +827,7 @@ export default function App() {
         /* Results Page Hero */
         .result-hero { position: relative; min-height: 200px !important; padding: 24px 0 0 !important; border-bottom: none !important; }
         .result-title-container { padding: 0 0 0 16px !important; position: absolute; top: 24px; left: 0; z-index: 2; }
+        .result-content { padding: 32px 16px !important; }
         .result-img { height: 120px !important; position: absolute; bottom: 0; right: 0; z-index: 1; }
         
         /* Results Page Subtext */
