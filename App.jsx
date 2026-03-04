@@ -822,6 +822,7 @@ export default function App() {
         /* Question & Result Pages Header */
         .page-header { padding: 30px 20px 10px !important; }
         .header-actions { gap: 8px !important; }
+        .quiz-container { margin-top: 30px !important; }
 
         /* Results Page Hero */
         .result-hero { position: relative; min-height: 200px !important; padding: 24px 0 0 !important; border-bottom: none !important; }
