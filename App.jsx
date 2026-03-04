@@ -451,7 +451,7 @@ const LandingPage = ({ onQuizStart, onGoManifesto }) => (
             </p>
 
             <div style={{ background: COLORS.bg, padding: '24px', marginBottom: '32px' }}>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '12px', marginBottom: '20px' }}>
+                <div className="personas-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '12px', marginBottom: '20px' }}>
                     {['thinker', 'maker', 'storyteller'].map(type => (
                         <div key={type} style={{ background: COLORS.white, padding: '16px 16px 0', display: 'flex', alignItems: 'flex-end', justifyContent: 'center', minHeight: '120px' }}>
                             <img src={`/illustrations/${type}.svg`} alt={type} style={{ width: '100%', height: 'auto' }} />
@@ -518,7 +518,7 @@ const QuizPage = ({ index, answers, onSelect, onBack, onRestart }) => {
                     {q.text}
                 </h2>
 
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '14px', alignItems: 'stretch' }}>
+                <div className="options-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '14px', alignItems: 'stretch' }}>
                     {q.options.map(opt => {
                         const isSelected = selectedValue === opt.value;
                         return (
@@ -807,6 +807,8 @@ export default function App() {
       @media (max-width: 480px) {
         .main-container { padding: 40px 20px !important; }
         .quiz-container { padding: 0 20px 40px !important; }
+        .options-grid { grid-template-columns: 1fr !important; }
+        .personas-grid { grid-template-columns: 1fr 1fr 1fr !important; }
         .result-hero { flex-direction: column-reverse !important; align-items: flex-start !important; }
         .result-hero img { height: 100px !important; width: auto !important; margin-bottom: 0 !important; margin-top: -20px; align-self: flex-end; }
         .spark-img { height: 65px !important; }
