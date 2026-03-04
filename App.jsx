@@ -527,7 +527,7 @@ const QuizPage = ({ index, answers, onSelect, onBack, onRestart }) => {
                                 onClick={() => onSelect(index, opt.value)}
                                 style={{
                                     background: isSelected ? COLORS.orange : COLORS.bg,
-                                    border: isSelected ? `2px solid ${COLORS.ink}` : 'none',
+                                    border: isSelected ? '2px solid #FFD8B2' : 'none',
                                     borderRadius: '0',
                                     padding: '22px 20px',
                                     cursor: 'pointer',
