@@ -414,7 +414,7 @@ const Layout = ({ children, activeTab, onTabChange, showNav = true }) => (
             width: '100%',
             maxWidth: '680px',
             borderRadius: '0',
-            border: `1px solid ${COLORS.border}`,
+            border: '1px solid #FFD8B2',
             boxShadow: 'none',
             overflow: 'hidden',
             display: 'flex',
@@ -440,7 +440,7 @@ const Layout = ({ children, activeTab, onTabChange, showNav = true }) => (
 
 const LandingPage = ({ onQuizStart, onGoManifesto }) => (
     <Layout activeTab="quiz" onTabChange={(tab) => tab === "manifesto" ? onGoManifesto() : null}>
-        <main className="main-container" style={{ flex: 1, padding: '60px 40px', width: '100%', boxSizing: 'border-box' }}>
+        <main className="main-container landing-container" style={{ flex: 1, padding: '60px 40px', width: '100%', boxSizing: 'border-box' }}>
             <Logo onClick={() => window.location.reload()} />
             <h1 style={h1Style}>
                 What kind of maker are you?
@@ -453,8 +453,8 @@ const LandingPage = ({ onQuizStart, onGoManifesto }) => (
             <div style={{ background: COLORS.bg, padding: '24px', marginBottom: '32px' }}>
                 <div className="personas-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '12px', marginBottom: '20px' }}>
                     {['thinker', 'maker', 'storyteller'].map(type => (
-                        <div key={type} style={{ background: COLORS.white, padding: '16px 16px 0', display: 'flex', alignItems: 'flex-end', justifyContent: 'center', minHeight: '120px' }}>
-                            <img src={`/illustrations/${type}.svg`} alt={type} style={{ width: '100%', height: 'auto' }} />
+                        <div key={type} className="persona-box" style={{ background: COLORS.white, padding: '16px 16px 0', display: 'flex', alignItems: 'flex-end', justifyContent: 'center', minHeight: '120px' }}>
+                            <img src={`/illustrations/${type}.svg`} alt={type} className="persona-img" style={{ width: '100%', height: 'auto' }} />
                         </div>
                     ))}
                 </div>
@@ -493,9 +493,9 @@ const QuizPage = ({ index, answers, onSelect, onBack, onRestart }) => {
 
     return (
         <Layout showNav={false}>
-            <header style={{ padding: '40px 40px 20px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%', boxSizing: 'border-box' }}>
-                <Logo style={{ height: '40px' }} onClick={onRestart} />
-                <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
+            <header className="page-header" style={{ padding: '40px 40px 20px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%', boxSizing: 'border-box' }}>
+                <Logo className="header-logo" style={{ height: '40px' }} onClick={onRestart} />
+                <div className="header-actions" style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
                     <span style={{ fontFamily: 'Inconsolata, monospace', fontSize: '14px', color: COLORS.muted, cursor: 'pointer', fontWeight: 600 }} onClick={onRestart}>restart</span>
                     <button onClick={onBack} style={{
                         background: '#FBEEDD',
@@ -605,18 +605,19 @@ const ResultPage = ({ personaKey, onRestart, onGoManifesto, onBack }) => {
 
     return (
         <Layout showNav={false}>
-            <header style={{ padding: '40px 40px 20px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%', boxSizing: 'border-box' }}>
-                <Logo style={{ height: '40px' }} onClick={onBack} />
-                <button onClick={onBack} style={{
-                    background: '#FBEEDD',
-                    border: 'none',
-                    borderRadius: '0',
-                    padding: '10px 18px',
-                    fontFamily: 'Inconsolata, monospace',
-                    fontSize: '13px',
-                    fontWeight: 600,
-                    cursor: 'pointer'
-                }}>← Go back</button>
+            <header className="page-header" style={{ padding: '40px 40px 20px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%', boxSizing: 'border-box' }}>
+                <Logo className="header-logo" style={{ height: '40px' }} onClick={onBack} />
+                <div className="header-actions" style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
+                    <button className="back-btn" onClick={onBack} style={{
+                        background: '#FBEEDD',
+                        border: 'none',
+                        borderRadius: '0',
+                        padding: '10px 18px',
+                        fontFamily: 'Inconsolata, monospace',
+                        fontSize: '13px',
+                        fontWeight: 600,
+                        cursor: 'pointer'
+                    }}>← Go back</button>
             </header>
 
             <main className="quiz-container" style={{ flex: 1, padding: '0 0 40px', width: '100%', boxSizing: 'border-box' }}>
@@ -633,7 +634,7 @@ const ResultPage = ({ personaKey, onRestart, onGoManifesto, onBack }) => {
                         boxSizing: 'border-box',
                         overflow: 'hidden'
                     }}>
-                        <div style={{ paddingBottom: '40px' }}>
+                        <div className="result-title-container" style={{ paddingBottom: '40px' }}>
                             <p style={{
                                 fontFamily: 'Inconsolata, monospace',
                                 fontSize: '14px',
@@ -642,11 +643,12 @@ const ResultPage = ({ personaKey, onRestart, onGoManifesto, onBack }) => {
                                 margin: '0 0 4px',
                                 fontWeight: 700
                             }}>YOU'RE</p>
-                            <h1 style={{ ...h1Style, margin: 0 }}>{persona.name}</h1>
+                            <h1 className="result-name" style={{ ...h1Style, margin: 0 }}>{persona.name}</h1>
                         </div>
                         <img
                             src={persona.illustration}
                             alt={persona.name}
+                            className="result-img"
                             style={{
                                 height: '180px',
                                 width: 'auto',
@@ -709,6 +711,7 @@ const ResultPage = ({ personaKey, onRestart, onGoManifesto, onBack }) => {
                 </div>
 
                 <div
+                    className="screenshot-helper"
                     onClick={handleDownload}
                     style={{
                         textAlign: 'center',
@@ -721,7 +724,7 @@ const ResultPage = ({ personaKey, onRestart, onGoManifesto, onBack }) => {
                     }}
                 >
                     <span style={{ color: COLORS.orange }}>✦</span>
-                    <span style={{ ...bodyTextStyle, fontSize: '15px', color: COLORS.muted, margin: 0 }}>
+                    <span className="screenshot-text" style={{ ...bodyTextStyle, fontSize: '15px', color: COLORS.muted, margin: 0 }}>
                         Screenshot this to save or share to your story
                     </span>
                     <span style={{ color: COLORS.orange }}>✦</span>
@@ -735,20 +738,20 @@ const ResultPage = ({ personaKey, onRestart, onGoManifesto, onBack }) => {
 
 const ManifestoPage = ({ onGoQuiz }) => (
     <Layout activeTab="manifesto" onTabChange={(tab) => tab === "landing" ? onGoQuiz() : null}>
-        <main style={{ flex: 1, padding: '60px 40px', width: '100%', boxSizing: 'border-box' }}>
+        <main className="manifesto-container" style={{ flex: 1, padding: '60px 40px', width: '100%', boxSizing: 'border-box' }}>
             <Logo onClick={onGoQuiz} />
             <h1 style={h1Style}>Manifesto</h1>
             <p style={bodyTextStyle}>
                 We were not built to scroll. Every tool ever made — language, paint, the internet — began as a way to make something, not just receive it. This is a small reminder that you are not just an audience. Made with 🩷
             </p>
 
-            <div style={{ background: '#F3F2F2', borderRadius: '0', border: 'none', padding: '36px 32px', textAlign: 'center' }}>
+            <div className="manifesto-card" style={{ background: '#F3F2F2', borderRadius: '0', border: 'none', padding: '36px 32px', textAlign: 'center' }}>
                 <div style={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap', gap: '8px', maxWidth: '400px', margin: '0 auto 28px' }}>
                     {AVATARS.map((src, i) => (
                         <img key={i} src={src} alt="Community Member" style={{ width: '46px', height: '46px', borderRadius: '50%', border: '2.5px solid white', objectFit: 'cover' }} />
                     ))}
                 </div>
-                <h3 style={{ ...h1Style, fontSize: '30px', margin: 0 }}>
+                <h3 className="manifesto-title" style={{ ...h1Style, fontSize: '30px', margin: 0 }}>
                     <span style={{ color: COLORS.orange }}>Everyone</span> should<br />
                     be <span style={{ color: COLORS.orange }}>creating...</span>
                 </h3>
@@ -803,14 +806,36 @@ export default function App() {
       }
       body { margin: 0; background: ${COLORS.bg}; }
       
-      /* Mobile adjustments */
+       /* Mobile adjustments */
       @media (max-width: 480px) {
         .main-container { padding: 40px 20px !important; }
         .quiz-container { padding: 0 20px 40px !important; }
         .options-grid { grid-template-columns: 1fr !important; }
-        .personas-grid { grid-template-columns: 1fr 1fr 1fr !important; }
-        .result-hero { flex-direction: column-reverse !important; align-items: flex-start !important; }
-        .result-hero img { height: 100px !important; width: auto !important; margin-bottom: 0 !important; margin-top: -20px; align-self: flex-end; }
+        
+        /* Landing Page: 2-row grid, equal heights, anchored bottom */
+        .personas-grid { grid-template-columns: 1fr 1fr !important; }
+        .personas-grid .persona-box:nth-child(3) { grid-column: span 2; }
+        .persona-box { min-height: 100px !important; height: 100px !important; padding: 0 !important; }
+        .persona-img { height: 100px !important; width: auto !important; }
+
+        /* Question & Result Pages Header */
+        .page-header { padding: 30px 20px 10px !important; }
+        .header-actions { gap: 8px !important; }
+
+        /* Results Page Hero */
+        .result-hero { position: relative; min-height: 200px !important; padding: 24px 0 0 !important; border-bottom: none !important; }
+        .result-title-container { padding: 0 0 0 16px !important; position: absolute; top: 24px; left: 0; z-index: 2; }
+        .result-img { height: 120px !important; position: absolute; bottom: 0; right: 0; z-index: 1; }
+        
+        /* Results Page Subtext */
+        .screenshot-helper { padding: 20px !important; width: 100%; box-sizing: border-box; }
+        .screenshot-text { font-size: 13px !important; line-height: 1.2 !important; }
+
+        /* Manifesto Page */
+        .manifesto-container { padding: 40px 16px !important; }
+        .manifesto-card { padding: 32px 16px !important; }
+        .manifesto-title { font-size: 25px !important; }
+
         .spark-img { height: 65px !important; }
       }
     `;
