@@ -1,18 +1,19 @@
 import React, { useState, useEffect, useRef } from 'react';
+import html2canvas from 'html2canvas';
 
 // --- CONSTANTS ---
 const COLORS = {
-    bg: "#F5F0E8",  // warm off-white
-    white: "#FDFAF4",  // slightly warm white
-    ink: "#1C1410",  // deep brown-black
-    orange: "#C4603A",  // primary accent
-    orangeHover: "#B8562E",  // darker orange
-    orangeLight: "#E8824A",  // lighter orange
-    sage: "#8A9E85",  // calm green
-    card: "#EDE8DF",  // card background
-    cardHover: "#E2DBD0",  // card hover
-    border: "#D4CEC4",  // borders
-    muted: "#9A9088",  // secondary text
+    bg: "#FBF7F0",  // updated background
+    white: "#FFFFFF",
+    ink: "#000000",  // pure black for body text
+    orange: "#E87624",  // primary orange
+    orangeHover: "#D1661D",
+    orangeLight: "#FF8E42",
+    sage: "#8A9E85",
+    card: "#F0EAE0",
+    cardHover: "#E5DEC9",
+    border: "#000000",  // sharpt black borders
+    muted: "#555555",
 };
 
 const QUESTIONS = [
@@ -137,14 +138,19 @@ function getPersona(answers) {
 
 // --- COMPONENTS ---
 
-const Logo = ({ style }) => (
-    <img src="/logo.svg" alt="Anticonsumption Logo" style={{ height: '52px', width: 'auto', ...style }} />
+const Logo = ({ style, onClick }) => (
+    <img
+        src="/logo.svg"
+        alt="Anticonsumption Logo"
+        onClick={onClick}
+        style={{ height: '52px', width: 'auto', cursor: onClick ? 'pointer' : 'default', ...style }}
+    />
 );
 
 const Footer = () => (
     <footer style={{
         background: COLORS.white,
-        borderTop: `1px solid ${COLORS.border}`,
+        borderTop: `5px solid ${COLORS.bg}`,
         padding: '16px',
         textAlign: 'center'
     }}>
@@ -152,14 +158,15 @@ const Footer = () => (
             fontFamily: 'Inconsolata, monospace',
             fontSize: '12px',
             textTransform: 'uppercase',
-            letterSpacing: '0.05em',
-            color: COLORS.muted
+            letterSpacing: '0.06em',
+            color: COLORS.muted,
+            fontWeight: 700
         }}>
             CREATED, NOT CONSUMED, BY <a
                 href="https://www.linkedin.com/in/abahgift"
                 target="_blank"
                 rel="noopener noreferrer"
-                style={{ color: COLORS.orange, textDecoration: 'none' }}
+                style={{ color: COLORS.orange, textDecoration: 'none', fontWeight: 700 }}
             >GIFT ABAH</a>
         </span>
     </footer>
@@ -167,22 +174,25 @@ const Footer = () => (
 
 const TaglineStrip = () => (
     <div style={{
-        borderTop: `1px solid ${COLORS.border}`,
-        padding: '20px 32px 0',
+        padding: '20px 0 0',
         textAlign: 'left'
     }}>
         <h4 style={{
             fontFamily: 'Inconsolata, monospace',
-            fontSize: '12px',
+            fontSize: '14px',
             color: COLORS.orange,
-            margin: '0 0 4px',
-            fontWeight: 400
+            margin: '0 0 8px',
+            fontWeight: 700,
+            textTransform: 'uppercase',
+            letterSpacing: '0.06em'
         }}>Why you should create</h4>
         <p style={{
-            fontFamily: 'Inconsolata, monospace',
-            fontSize: '12px',
-            color: COLORS.muted,
-            margin: 0
+            ...bodyTextStyle,
+            fontSize: '14px',
+            fontWeight: 500,
+            margin: 0,
+            lineHeight: '27px',
+            letterSpacing: '0.02em'
         }}>
             For the notes app full of unsent ideas · For the thing you keep meaning to make · For you.
         </p>
@@ -252,16 +262,16 @@ const SparkMascot = ({ dismissed, onDismiss }) => {
             <div style={{
                 background: '#FBF5E6',
                 border: '1.5px solid #E8824A',
-                borderRadius: '12px',
-                padding: '12px 16px',
+                borderRadius: '0',
+                padding: '12px 24px 12px 16px',
                 boxShadow: '0 4px 20px rgba(196,96,58,0.15)',
                 marginBottom: '8px',
                 position: 'relative',
-                maxWidth: '200px'
+                maxWidth: '220px'
             }}>
                 <p style={{
                     fontFamily: 'Inconsolata, monospace',
-                    fontSize: '13px',
+                    fontSize: '15px',
                     color: COLORS.ink,
                     margin: 0,
                     lineHeight: 1.5
@@ -271,17 +281,17 @@ const SparkMascot = ({ dismissed, onDismiss }) => {
                     style={{
                         position: 'absolute',
                         top: '4px',
-                        right: '8px',
+                        right: '6px',
                         background: 'none',
                         border: 'none',
                         fontFamily: 'Inconsolata, monospace',
-                        fontSize: '14px',
+                        fontSize: '16px',
                         color: COLORS.muted,
                         cursor: 'pointer'
                     }}
                 >✕</button>
             </div>
-            <img src="/images/Mascot_Spark.svg" alt="Spark" className="spark-img" style={{ height: '85px', width: 'auto' }} />
+            <img src="/images/Mascot_Spark.svg" alt="Spark" className="spark-img" style={{ height: '100px', width: 'auto' }} />
         </div>
     );
 };
@@ -323,15 +333,19 @@ const ShareModal = ({ persona, onClose }) => {
 
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
                     <a href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(shareUrl)}`} target="_blank" rel="noreferrer" style={shareItemStyle}>
+                        <img src="/socials/x.svg" alt="Twitter/X" style={{ height: '18px', width: '18px' }} />
                         <span>Twitter / X</span>
                     </a>
                     <a href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(shareUrl)}`} target="_blank" rel="noreferrer" style={shareItemStyle}>
+                        <img src="/socials/Linkedin.svg" alt="LinkedIn" style={{ height: '18px', width: '18px' }} />
                         <span>LinkedIn</span>
                     </a>
                     <a href={`https://wa.me/?text=${encodeURIComponent(shareText + ' ' + shareUrl)}`} target="_blank" rel="noreferrer" style={shareItemStyle}>
+                        <img src="/socials/whatsapp.svg" alt="WhatsApp" style={{ height: '18px', width: '18px' }} />
                         <span>WhatsApp</span>
                     </a>
                     <button onClick={copyLink} style={{ ...shareItemStyle, background: 'none', border: 'none', cursor: 'pointer', width: '100%', textAlign: 'left' }}>
+                        <img src="/socials/link.svg" alt="Link" style={{ height: '18px', width: '18px' }} />
                         <span>{copied ? "Copied!" : "Copy link"}</span>
                     </button>
                 </div>
@@ -353,11 +367,13 @@ const ShareModal = ({ persona, onClose }) => {
 };
 
 const shareItemStyle = {
-    display: 'block',
+    display: 'flex',
+    alignItems: 'center',
+    gap: '12px',
     padding: '14px 18px',
     background: COLORS.white,
     border: `1px solid ${COLORS.border}`,
-    borderRadius: '10px',
+    borderRadius: '0',
     fontFamily: 'Inconsolata, monospace',
     fontSize: '14px',
     color: COLORS.ink,
@@ -366,31 +382,83 @@ const shareItemStyle = {
 
 // --- MAIN PAGES ---
 
+const bodyTextStyle = {
+    fontFamily: 'Inconsolata, monospace',
+    fontSize: '17px',
+    lineHeight: '27px',
+    letterSpacing: '-0.02em',
+    color: COLORS.ink,
+    margin: '0 0 32px'
+};
+
+const h1Style = {
+    fontFamily: 'Young Serif, serif',
+    fontSize: '35px',
+    color: COLORS.ink,
+    margin: '24px 0 16px',
+    lineHeight: 1.1,
+    fontWeight: 400
+};
+
+const Layout = ({ children, activeTab, onTabChange, showNav = true }) => (
+    <div style={{
+        background: COLORS.bg,
+        minHeight: '100vh',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        padding: '40px 20px'
+    }}>
+        <div style={{
+            background: COLORS.white,
+            width: '100%',
+            maxWidth: '680px',
+            borderRadius: '0',
+            border: `1px solid ${COLORS.border}`,
+            boxShadow: 'none',
+            overflow: 'hidden',
+            display: 'flex',
+            flexDirection: 'column'
+        }}>
+            {showNav && (
+                <nav style={navStyle}>
+                    <div
+                        style={{ ...navItemStyle, borderBottom: activeTab === "quiz" ? `3px solid ${COLORS.orange}` : 'none', color: activeTab === "quiz" ? COLORS.ink : COLORS.muted, fontWeight: activeTab === "quiz" ? 600 : 400, cursor: 'pointer' }}
+                        onClick={() => onTabChange("landing")}
+                    >CREATOR PERSONA</div>
+                    <div
+                        style={{ ...navItemStyle, borderBottom: activeTab === "manifesto" ? `3px solid ${COLORS.orange}` : 'none', color: activeTab === "manifesto" ? COLORS.ink : COLORS.muted, fontWeight: activeTab === "manifesto" ? 600 : 400, cursor: 'pointer' }}
+                        onClick={() => onTabChange("manifesto")}
+                    >MANIFESTO</div>
+                </nav>
+            )}
+            {children}
+            <Footer />
+        </div>
+    </div>
+);
+
 const LandingPage = ({ onQuizStart, onGoManifesto }) => (
-    <div style={{ background: COLORS.bg, minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
-        <nav style={navStyle}>
-            <div style={{ ...navItemStyle, borderBottom: `3px solid ${COLORS.orange}`, color: COLORS.ink }}>CREATOR PERSONA</div>
-            <div style={{ ...navItemStyle, color: COLORS.muted, cursor: 'pointer' }} onClick={onGoManifesto}>MANIFESTO</div>
-        </nav>
-        <main className="main-container" style={{ flex: 1, maxWidth: '640px', margin: '0 auto', padding: '40px 32px', width: '100%' }}>
-            <Logo />
-            <h1 style={{ fontFamily: 'Young Serif, serif', fontSize: '48px', color: COLORS.ink, margin: '24px 0 16px', lineHeight: 1.1 }}>
+    <Layout activeTab="quiz" onTabChange={(tab) => tab === "manifesto" ? onGoManifesto() : null}>
+        <main className="main-container" style={{ flex: 1, padding: '60px 40px', width: '100%', boxSizing: 'border-box' }}>
+            <Logo onClick={() => window.location.reload()} />
+            <h1 style={h1Style}>
                 What kind of maker are you?
             </h1>
-            <p style={{ fontFamily: 'Inconsolata, monospace', fontSize: '14px', lineHeight: 1.7, margin: '0 0 32px', color: COLORS.ink }}>
+            <p style={bodyTextStyle}>
                 In a world built for consuming, some of us are wired to make.<br />
                 Take 2 minutes to find out how you create.
             </p>
 
-            <div style={{ background: COLORS.white, borderRadius: '16px', border: `1px solid ${COLORS.border}`, padding: '24px', marginBottom: '32px' }}>
+            <div style={{ background: COLORS.bg, padding: '24px', marginBottom: '32px' }}>
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '12px', marginBottom: '20px' }}>
                     {['thinker', 'maker', 'storyteller'].map(type => (
-                        <div key={type} style={{ background: COLORS.card, borderRadius: '10px', padding: '16px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                        <div key={type} style={{ background: COLORS.white, padding: '16px 16px 0', display: 'flex', alignItems: 'flex-end', justifyContent: 'center', minHeight: '120px' }}>
                             <img src={`/illustrations/${type}.svg`} alt={type} style={{ width: '100%', height: 'auto' }} />
                         </div>
                     ))}
                 </div>
-                <p style={{ fontFamily: 'Inconsolata, monospace', fontSize: '12px', color: COLORS.muted, textAlign: 'center', margin: 0 }}>
+                <p style={{ ...bodyTextStyle, fontSize: '14px', fontWeight: 500, textAlign: 'center', margin: 0, letterSpacing: '0.02em' }}>
                     Thinker · Maker · Storyteller · Connector · Builder · Nurturer
                 </p>
             </div>
@@ -401,7 +469,7 @@ const LandingPage = ({ onQuizStart, onGoManifesto }) => (
                 color: 'white',
                 border: 'none',
                 padding: '20px',
-                borderRadius: '12px',
+                borderRadius: '0',
                 fontFamily: 'Inconsolata, monospace',
                 fontSize: '15px',
                 fontWeight: 600,
@@ -409,15 +477,14 @@ const LandingPage = ({ onQuizStart, onGoManifesto }) => (
                 cursor: 'pointer',
                 transition: 'background 0.2s'
             }} onMouseOver={e => e.target.style.background = COLORS.orangeHover} onMouseOut={e => e.target.style.background = COLORS.orange}>
-                let's do this 🖊
+                LET'S DO THIS
             </button>
 
             <div style={{ marginTop: '40px' }}>
                 <TaglineStrip />
             </div>
         </main>
-        <Footer />
-    </div>
+    </Layout>
 );
 
 const QuizPage = ({ index, answers, onSelect, onBack, onRestart }) => {
@@ -425,32 +492,33 @@ const QuizPage = ({ index, answers, onSelect, onBack, onRestart }) => {
     const selectedValue = answers[index];
 
     return (
-        <div style={{ background: COLORS.bg, minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
-            <header style={{ padding: '24px 32px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', maxWidth: '640px', margin: '0 auto', width: '100%' }}>
-                <Logo style={{ height: '40px' }} />
+        <Layout showNav={false}>
+            <header style={{ padding: '40px 40px 20px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%', boxSizing: 'border-box' }}>
+                <Logo style={{ height: '40px' }} onClick={onRestart} />
                 <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
-                    <span style={{ fontFamily: 'Inconsolata, monospace', fontSize: '12px', color: COLORS.muted, cursor: 'pointer' }} onClick={onRestart}>restart</span>
+                    <span style={{ fontFamily: 'Inconsolata, monospace', fontSize: '14px', color: COLORS.muted, cursor: 'pointer', fontWeight: 600 }} onClick={onRestart}>restart</span>
                     <button onClick={onBack} style={{
-                        background: COLORS.white,
-                        border: `1px solid ${COLORS.border}`,
-                        borderRadius: '8px',
+                        background: '#FBEEDD',
+                        border: 'none',
+                        borderRadius: '0',
                         padding: '10px 18px',
                         fontFamily: 'Inconsolata, monospace',
                         fontSize: '13px',
+                        fontWeight: 600,
                         cursor: 'pointer'
                     }}>← Go back</button>
                 </div>
             </header>
 
-            <main className="quiz-container" style={{ flex: 1, maxWidth: '640px', margin: '0 auto', padding: '0 32px 40px', width: '100%' }}>
-                <p style={{ fontFamily: 'Inconsolata, monospace', fontSize: '12px', color: COLORS.muted, letterSpacing: '0.1em', margin: '0 0 16px' }}>
+            <main className="quiz-container" style={{ flex: 1, padding: '0 40px 40px', width: '100%', boxSizing: 'border-box' }}>
+                <p style={{ fontFamily: 'Inconsolata, monospace', fontSize: '14px', color: COLORS.muted, letterSpacing: '0.1em', margin: '0 0 26px', fontWeight: 600 }}>
                     {q.label}
                 </p>
-                <h2 style={{ fontFamily: 'Young Serif, serif', fontSize: '32px', color: COLORS.ink, lineHeight: 1.2, margin: '0 0 36px' }}>
+                <h2 style={{ ...h1Style, fontSize: '28px', marginBottom: '48px' }}>
                     {q.text}
                 </h2>
 
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '14px' }}>
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '14px', alignItems: 'stretch' }}>
                     {q.options.map(opt => {
                         const isSelected = selectedValue === opt.value;
                         return (
@@ -458,24 +526,47 @@ const QuizPage = ({ index, answers, onSelect, onBack, onRestart }) => {
                                 key={opt.value}
                                 onClick={() => onSelect(index, opt.value)}
                                 style={{
-                                    background: isSelected ? COLORS.orangeLight : COLORS.card,
-                                    border: isSelected ? `2px solid ${COLORS.orange}` : 'none',
-                                    borderRadius: '12px',
+                                    background: isSelected ? COLORS.orange : COLORS.bg,
+                                    border: isSelected ? `2px solid ${COLORS.ink}` : 'none',
+                                    borderRadius: '0',
                                     padding: '22px 20px',
                                     cursor: 'pointer',
-                                    transition: '0.18s ease',
+                                    transition: '0.1s ease',
                                     transform: isSelected ? 'scale(1.02)' : 'scale(1)',
-                                    boxShadow: isSelected ? '0 4px 16px rgba(196,96,58,0.25)' : 'none',
-                                    textAlign: 'center'
+                                    textAlign: 'center',
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                    justifyContent: 'center',
+                                    height: '100%'
                                 }}
                             >
                                 {opt.sub ? (
                                     <>
-                                        <div style={{ fontFamily: 'Inconsolata, monospace', fontWeight: 700, color: isSelected ? 'white' : COLORS.orange, marginBottom: '4px' }}>{opt.label}</div>
-                                        <div style={{ fontFamily: 'Inconsolata, monospace', fontSize: '13px', color: isSelected ? 'white' : COLORS.ink }}>{opt.sub}</div>
+                                        <div style={{
+                                            ...bodyTextStyle,
+                                            fontWeight: 700,
+                                            color: isSelected ? 'white' : COLORS.orange,
+                                            marginBottom: '2px',
+                                            fontSize: '15px',
+                                            lineHeight: '1.3',
+                                            margin: '0 0 2px'
+                                        }}>{opt.label}</div>
+                                        <div style={{
+                                            ...bodyTextStyle,
+                                            fontSize: '15px',
+                                            color: isSelected ? 'white' : COLORS.ink,
+                                            margin: 0,
+                                            lineHeight: '1.3'
+                                        }}>{opt.sub}</div>
                                     </>
                                 ) : (
-                                    <div style={{ fontFamily: 'Inconsolata, monospace', fontSize: '13.5px', color: isSelected ? 'white' : COLORS.ink }}>{opt.label}</div>
+                                    <div style={{
+                                        ...bodyTextStyle,
+                                        fontSize: '15px',
+                                        color: isSelected ? 'white' : COLORS.ink,
+                                        margin: 0,
+                                        lineHeight: '1.3'
+                                    }}>{opt.label}</div>
                                 )}
                             </button>
                         );
@@ -485,101 +576,190 @@ const QuizPage = ({ index, answers, onSelect, onBack, onRestart }) => {
                     <TaglineStrip />
                 </div>
             </main>
-            <Footer />
-        </div>
+        </Layout>
     );
 };
 
 const ResultPage = ({ personaKey, onRestart, onGoManifesto, onBack }) => {
     const persona = PERSONAS[personaKey];
     const [showShare, setShowShare] = useState(false);
+    const resultRef = useRef(null);
+
+    const handleDownload = async () => {
+        if (!resultRef.current) return;
+        try {
+            const canvas = await html2canvas(resultRef.current, {
+                useCORS: true,
+                scale: 2,
+                backgroundColor: COLORS.white,
+                logging: false,
+            });
+            const link = document.createElement('a');
+            link.download = `anticonsumption-${personaKey}.png`;
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+        } catch (err) {
+            console.error("Screenshot failed:", err);
+        }
+    };
 
     return (
-        <div style={{ background: COLORS.bg, minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
-            <header style={{ padding: '24px 32px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', maxWidth: '680px', margin: '0 auto', width: '100%' }}>
-                <Logo style={{ height: '40px' }} />
+        <Layout showNav={false}>
+            <header style={{ padding: '40px 40px 20px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%', boxSizing: 'border-box' }}>
+                <Logo style={{ height: '40px' }} onClick={onBack} />
                 <button onClick={onBack} style={{
-                    background: COLORS.white,
-                    border: `1px solid ${COLORS.border}`,
-                    borderRadius: '8px',
+                    background: '#FBEEDD',
+                    border: 'none',
+                    borderRadius: '0',
                     padding: '10px 18px',
                     fontFamily: 'Inconsolata, monospace',
                     fontSize: '13px',
+                    fontWeight: 600,
                     cursor: 'pointer'
                 }}>← Go back</button>
             </header>
 
-            <main className="quiz-container" style={{ flex: 1, maxWidth: '680px', margin: '0 auto', padding: '0 32px 40px', width: '100%' }}>
-                <div style={{
-                    background: COLORS.white,
-                    borderRadius: '16px',
-                    border: `1px solid ${COLORS.border}`,
-                    overflow: 'hidden',
-                    boxShadow: '0 8px 40px rgba(28,20,16,0.08)',
-                    marginBottom: '24px'
-                }}>
-                    <div className="result-hero" style={{ background: COLORS.card, padding: '32px', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', minHeight: '180px' }}>
-                        <div>
-                            <p style={{ fontFamily: 'Inconsolata, monospace', fontSize: '12px', color: COLORS.orange, letterSpacing: '0.12em', margin: '0 0 4px' }}>YOU'RE</p>
-                            <h1 style={{ fontFamily: 'Young Serif, serif', fontSize: '40px', margin: 0 }}>{persona.name}</h1>
+            <main className="quiz-container" style={{ flex: 1, padding: '0 0 40px', width: '100%', boxSizing: 'border-box' }}>
+                <div ref={resultRef} style={{ background: COLORS.white, paddingBottom: '32px' }}>
+                    <div className="result-hero" style={{
+                        background: COLORS.bg,
+                        padding: '40px 40px 0',
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        alignItems: 'flex-end',
+                        minHeight: '220px',
+                        borderBottom: 'none',
+                        width: '100%',
+                        boxSizing: 'border-box',
+                        overflow: 'hidden'
+                    }}>
+                        <div style={{ paddingBottom: '40px' }}>
+                            <p style={{
+                                fontFamily: 'Inconsolata, monospace',
+                                fontSize: '14px',
+                                color: COLORS.orange,
+                                letterSpacing: '0.12em',
+                                margin: '0 0 4px',
+                                fontWeight: 700
+                            }}>YOU'RE</p>
+                            <h1 style={{ ...h1Style, margin: 0 }}>{persona.name}</h1>
                         </div>
-                        <img src={persona.illustration} alt={persona.name} style={{ height: '120px', width: 'auto', marginBottom: '-32px' }} />
+                        <img
+                            src={persona.illustration}
+                            alt={persona.name}
+                            style={{
+                                height: '180px',
+                                width: 'auto',
+                                marginBottom: '0',
+                                display: 'block'
+                            }}
+                        />
                     </div>
-                    <div style={{ padding: '28px 32px 32px' }}>
-                        <p style={{ fontFamily: 'Inconsolata, monospace', fontSize: '14px', lineHeight: 1.8, margin: '0 0 28px', color: COLORS.ink }}>
+
+                    <div style={{ padding: '32px 40px' }}>
+                        <p style={bodyTextStyle}>
                             {persona.description}
                         </p>
-                        <div style={{ display: 'flex', gap: '12px', alignItems: 'center', flexWrap: 'wrap' }}>
-                            <button onClick={() => setShowShare(true)} style={{ background: COLORS.orange, color: 'white', border: 'none', padding: '14px 28px', borderRadius: '10px', fontFamily: 'Inconsolata, monospace', cursor: 'pointer' }}>SHARE</button>
-                            <button onClick={onRestart} style={{ background: COLORS.card, border: `1.5px solid ${COLORS.border}`, padding: '14px 28px', borderRadius: '10px', fontFamily: 'Inconsolata, monospace', cursor: 'pointer' }}>RETAKE QUIZ</button>
-                            <span style={{ fontFamily: 'Inconsolata, monospace', fontSize: '13px', color: COLORS.muted, borderBottom: `1px solid ${COLORS.muted}`, cursor: 'pointer' }} onClick={onGoManifesto}>read the manifesto</span>
+
+                        <div style={{ display: 'flex', gap: '16px', alignItems: 'center', flexWrap: 'wrap' }}>
+                            <button
+                                onClick={() => setShowShare(true)}
+                                style={{
+                                    background: COLORS.orange,
+                                    color: 'white',
+                                    border: 'none',
+                                    padding: '14px 28px',
+                                    borderRadius: '0',
+                                    fontFamily: 'Inconsolata, monospace',
+                                    fontSize: '16px',
+                                    fontWeight: 700,
+                                    cursor: 'pointer'
+                                }}
+                            >SHARE</button>
+                            <button
+                                onClick={onRestart}
+                                style={{
+                                    background: '#FBEEDD',
+                                    color: '#1C1410',
+                                    border: 'none',
+                                    padding: '14px 28px',
+                                    borderRadius: '0',
+                                    fontFamily: 'Inconsolata, monospace',
+                                    fontSize: '16px',
+                                    fontWeight: 700,
+                                    cursor: 'pointer'
+                                }}
+                            >RETAKE QUIZ</button>
+                            <div style={{ display: 'flex', alignItems: 'center', height: '100%' }}>
+                                <span
+                                    style={{
+                                        ...bodyTextStyle,
+                                        fontSize: '15px',
+                                        fontWeight: 700,
+                                        color: COLORS.muted,
+                                        borderBottom: `1px solid ${COLORS.muted}`,
+                                        cursor: 'pointer',
+                                        margin: 0
+                                    }}
+                                    onClick={onGoManifesto}
+                                >Read the manifesto</span>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <p style={{ textAlign: 'center', fontFamily: 'Inconsolata, monospace', fontSize: '12px', color: COLORS.muted }}>
-                    Screenshot this to save or share to your story ✦
-                </p>
+                <div
+                    onClick={handleDownload}
+                    style={{
+                        textAlign: 'center',
+                        cursor: 'pointer',
+                        padding: '20px 40px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        gap: '12px'
+                    }}
+                >
+                    <span style={{ color: COLORS.orange }}>✦</span>
+                    <span style={{ ...bodyTextStyle, fontSize: '15px', color: COLORS.muted, margin: 0 }}>
+                        Screenshot this to save or share to your story
+                    </span>
+                    <span style={{ color: COLORS.orange }}>✦</span>
+                </div>
             </main>
 
             {showShare && <ShareModal persona={persona} onClose={() => setShowShare(false)} />}
-            <Footer />
-        </div>
+        </Layout>
     );
 };
 
 const ManifestoPage = ({ onGoQuiz }) => (
-    <div style={{ background: COLORS.bg, minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
-        <nav style={navStyle}>
-            <div style={{ ...navItemStyle, color: COLORS.muted, cursor: 'pointer' }} onClick={onGoQuiz}>CREATOR PERSONA</div>
-            <div style={{ ...navItemStyle, borderBottom: `3px solid ${COLORS.orange}`, color: COLORS.ink }}>MANIFESTO</div>
-        </nav>
-        <main style={{ flex: 1, maxWidth: '720px', margin: '0 auto', padding: '40px 32px', width: '100%' }}>
-            <Logo />
-            <h1 style={{ fontFamily: 'Young Serif, serif', fontSize: '56px', margin: '28px 0 24px' }}>Manifesto</h1>
-            <p style={{ fontFamily: 'Inconsolata, monospace', fontSize: '15px', lineHeight: 1.9, margin: '0 0 40px', maxWidth: '600px' }}>
+    <Layout activeTab="manifesto" onTabChange={(tab) => tab === "landing" ? onGoQuiz() : null}>
+        <main style={{ flex: 1, padding: '60px 40px', width: '100%', boxSizing: 'border-box' }}>
+            <Logo onClick={onGoQuiz} />
+            <h1 style={h1Style}>Manifesto</h1>
+            <p style={bodyTextStyle}>
                 We were not built to scroll. Every tool ever made — language, paint, the internet — began as a way to make something, not just receive it. This is a small reminder that you are not just an audience. Made with 🩷
             </p>
 
-            <div style={{ background: '#F0EDEA', borderRadius: '16px', border: `1px solid ${COLORS.border}`, padding: '36px 32px', textAlign: 'center' }}>
+            <div style={{ background: '#F3F2F2', borderRadius: '0', border: 'none', padding: '36px 32px', textAlign: 'center' }}>
                 <div style={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap', gap: '8px', maxWidth: '400px', margin: '0 auto 28px' }}>
                     {AVATARS.map((src, i) => (
                         <img key={i} src={src} alt="Community Member" style={{ width: '46px', height: '46px', borderRadius: '50%', border: '2.5px solid white', objectFit: 'cover' }} />
                     ))}
                 </div>
-                <h3 style={{ fontFamily: 'Young Serif, serif', fontSize: '30px', lineHeight: 1.3, margin: 0 }}>
+                <h3 style={{ ...h1Style, fontSize: '30px', margin: 0 }}>
                     <span style={{ color: COLORS.orange }}>Everyone</span> should<br />
                     be <span style={{ color: COLORS.orange }}>creating...</span>
                 </h3>
             </div>
         </main>
-        <Footer />
-    </div>
+    </Layout>
 );
 
 const navStyle = {
     display: 'flex',
-    borderBottom: `1px solid ${COLORS.border}`,
+    borderBottom: `5px solid ${COLORS.bg}`,
     background: COLORS.white
 };
 
