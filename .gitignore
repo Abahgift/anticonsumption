@@ -25,6 +25,8 @@ dist-ssr/
 *.sw?
 
 # Vibe Coding & Large Files
+ANTICONSUMPTION_MASTER.md
+anticonsumption.jsx
 *.zip
 *.rar
 *.7z
