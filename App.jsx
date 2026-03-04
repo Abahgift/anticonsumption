@@ -150,7 +150,7 @@ const Logo = ({ style, onClick }) => (
 const Footer = () => (
     <footer style={{
         background: COLORS.white,
-        borderTop: `5px solid ${COLORS.bg}`,
+        borderTop: '5px solid #FFD8B2',
         padding: '16px',
         textAlign: 'center'
     }}>
@@ -763,7 +763,7 @@ const ManifestoPage = ({ onGoQuiz }) => (
 
 const navStyle = {
     display: 'flex',
-    borderBottom: `5px solid ${COLORS.bg}`,
+    borderBottom: '5px solid #FFD8B2',
     background: COLORS.white
 };
 
@@ -775,7 +775,7 @@ const navItemStyle = {
     textTransform: 'uppercase',
     letterSpacing: '0.1em',
     textAlign: 'center',
-    borderRight: `1px solid ${COLORS.border}`
+    borderRight: '1px solid #FFD8B2'
 };
 
 // --- APP COMPONENT ---
