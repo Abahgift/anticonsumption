@@ -150,7 +150,7 @@ const Logo = ({ style, onClick }) => (
 const Footer = () => (
     <footer style={{
         background: COLORS.white,
-        borderTop: '5px solid #FFD8B2',
+        borderTop: `5px solid ${COLORS.bg}`,
         padding: '16px',
         textAlign: 'center'
     }}>
@@ -763,7 +763,7 @@ const ManifestoPage = ({ onGoQuiz }) => (
 
 const navStyle = {
     display: 'flex',
-    borderBottom: '5px solid #FFD8B2',
+    borderBottom: `5px solid ${COLORS.bg}`,
     background: COLORS.white
 };
 
