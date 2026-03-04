@@ -618,6 +618,7 @@ const ResultPage = ({ personaKey, onRestart, onGoManifesto, onBack }) => {
                         fontWeight: 600,
                         cursor: 'pointer'
                     }}>← Go back</button>
+                </div>
             </header>
 
             <main className="quiz-container" style={{ flex: 1, padding: '0 0 40px', width: '100%', boxSizing: 'border-box' }}>
