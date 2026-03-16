@@ -2,7 +2,7 @@
 
 > A short quiz to help you discover what kind of creator you are.
 
-![App Preview](./public/landing.png)
+![App Preview](public/images/Landing.png)
 <!-- Replace preview.png with your actual screenshot path when ready -->
 
 **Live site → [anticonsumption.vercel.app](https://anticonsumption.vercel.app)**
